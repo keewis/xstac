@@ -151,6 +151,9 @@ def build_temporal_dimension(ds, name, extent, values, step):
 
 def build_horizontal_dimension(ds, name, axis, extent, values, step, reference_system):
     da = ds[name]
+    if len(da.dims) == 0:
+        da = da.expand_dims(name)
+
     if extent is None:
         extent = np.asarray(
             np.concatenate([da.min(keepdims=True), da.max(keepdims=True)])
