@@ -109,6 +109,9 @@ def maybe_infer_step(da, step):
 
 def build_temporal_dimension(ds, name, extent, values, step):
     time = ds.coords[name]
+    if len(time.dims) == 0:
+        time = time.expand_dims(name)
+
     start = time.min(keepdims=True)
     end = time.max(keepdims=True)
 
